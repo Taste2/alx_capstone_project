@@ -12,7 +12,9 @@
 - financial tips
 
 ## Technologies Used:
-- HTML, CSS, JAVASCRIPT, API, REQUESTS
+- Front End: HTML, CSS
+- Back End: JAVASCRIPT, API, MySQL
+
 ## Screenshots or Demo:
 
 ## Roadmap and Future Enhancements

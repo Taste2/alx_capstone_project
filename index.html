@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+
+<body>
+    <!--Header begins-->
+    <header id="header_container" class="header">
+        <img class="header_logo" src="assets/icons/logo.png" alt="logo" height="40px">
+        <div class="nav_links_container">
+            <nav class="nav_links">
+                <a href="#">Events</a>
+                <a href="#">Finance</a>
+            </nav>
+        </div>
+    </header>
+    <!--Header ends-->
+
+    <!--main begins-->
+    <main>
+        <h1>Live within your budget </h1>
+
+        <section class="sections_container">
+            <div class="main_1">
+                <!--Section to add budget begins-->
+                <section class="section_add_budget">
+                    <form id="form_container" class="form_container" action="#" method="post">
+                        <ul>
+                            <li>
+                                <label for="limit">Set limit</label>
+                                <input type="number" name="budget limit" id="limit" placeholder="Enter amount">
+                            </li>
+                            <li>
+                                <label for="start_date">Start date</label>
+                                <input type="date" name="start_date" id="start_date">
+                            </li>
+                            <li>
+                                <button id="add_btn" type="submit">Add</button>
+                            </li>
+                        </ul>
+                    </form>
+                </section>
+                <!--Section to add budget ends-->
+
+                <!--Section to display budget status begins-->
+                <section class="section_budget_status">
+                    <div class="display_summary_container">
+                        <div class="pie-chart" id="pie-chart">
+                            <script>
+                                //Define data: values and colors for each slice
+                                const data = [
+                                    {value: 30, color: '#007bff'},
+                                    {value: 50, color: '#ff5722'},
+                                    {value: 20, color: '#4caf50'}
+                                ];
+
+                                //calculate total value of all data points
+                                const totalValue = data.reduce((total, slice) => total + slice.value, 0);
+
+                                //get pie chart container
+                                const pieChart = document.getElementById('pie-chart');
+
+                                //create slice based on data
+                                let startAngle = 0;
+                                data.forEach((sliceData, index) => {
+                                    const slice = document.createElement('div');
+                                    slice.className = 'slice';
+                                    slice.style.backgroundColor = sliceData.color;
+
+                                    //calculate angle for this slice
+                                    const angle = (sliceData.value / totalValue) * 360;
+
+                                    //apply rotationto position the slice correctly
+                                    slice.style.transform = `rotate(${startAngle}deg)`;
+                                    startAngle += angle;
+
+                                    //append slice to pie container
+                                    pieChart.appendChild(slice);
+                                });
+                            </script>
+                        </div>
+
+                        <div class="display_area_digits">
+                            <div>
+                                <h4 id="limit_digit_header">Limit:</h4>
+                                <p id="limit_dig_para">4000</p>
+                            </div>
+                            <div>
+                                <h4 id="remaining_digit_header">Remaining:</h4>
+                                <p id="limit_dig_para">2000</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--Section to display budget status ends-->
+
+                <!--Section to display revenue and expense status begins-->
+                <section class="section_revenue_and_expense_status">
+                    <div class="status_digits_container">
+                        <div class="limit_progress_bar">
+                            <div><img src="assets/icons/limit.png" alt="like" height="40px"></div>
+                            <div class="progress_digits">
+                                <h4 id="limit_digit_header">Limit: <span id="limit_amount">4000</span></h4>
+                                <meter min="0" max="4000" value="3500">3500</meter>
+                            </div>
+                        </div>
+                        <div class="spent_progress_bar">
+                            <div><img src="assets/icons/spent.png" alt="clock" height="40px"></div>
+                            <div class="progress_digits">
+                                <h4 id="expense_digit_header">Spent: <span id="spent_amount"></span>2000</h4>
+                                <meter min="0" max="4000" value="3500">3500</meter>
+                            </div>
+                        </div>
+                        <div class="remaining_progress_bar">
+                            <div><img src="assets/icons/remaining.png" alt="bank" height="40px"></div>
+                            <div class="progress_digits">
+                                <h4 id="rem_exp_header">Remaining: <span id="remaining_amout">2000</span></h4>
+                                <meter min="0" max="4000" value="3500">3500</meter>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="status_display_container"></div>
+                </section>
+                <!--Section to display revenue and expense status ends-->
+            </div>
+
+            <div class="main_2">
+                <div class="add_revenue_container">
+                    <form action="#" method="post">
+                        <!--Form to add revenue-->
+                        <div>
+                            <ul>
+                                <li>
+                                    <label for="add_revenue">Add revenue</label>
+                                    <select name="add_revenue_category" id="add_revenue">
+                                        <option value="">Cat1</option>
+                                        <option value="">Cat2</option>
+                                        <option value="">Cat3</option>
+                                        <option value="">Cat4</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label for="add_rev_amount">Amount</label>
+                                    <input type="number" id="add_rev_amount" placeholder="Enter amount">
+                                </li>
+                                <li><button id="add_rev_btn" type="submit">Add</button></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+                <div class="add_expense_container">
+                    <form action="#" method="post">
+                        <!--Form to add expenses-->
+                        <div>
+                            <ul>
+                                <li>
+                                    <label for="add_expense">Add expense</label>
+                                    <select name="add_exp_category" id="add_expense">
+                                        <option value="">Cat1</option>
+                                        <option value="">Cat2</option>
+                                        <option value="">Cat3</option>
+                                        <option value="">Cat4</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label for="add_exp_amount">Amount</label>
+                                    <input type="number" id="add_exp_amount" placeholder="Enter amount">
+                                </li>
+                                <li>
+                                    <button id="add_exp_btn" type="submit">Add</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+                <div></div>
+            </div>
+        </section>
+
+    </main>
+    <!--main ends-->
+
+    <footer>
+        <img src="assets/icons/logo.png" alt="logo" height="40px">
+        <div>
+            <nav>
+                <a href="#">Twitter</a>
+                <a href="#">Facebook</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+
+</html>
