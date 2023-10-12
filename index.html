@@ -33,71 +33,20 @@
                         <ul>
                             <li>
                                 <label for="limit">Set limit</label>
-                                <input type="number" name="budget limit" id="limit" placeholder="Enter amount">
+                                <input type="number" name="budget limit" id="limit" placeholder="Enter amount" required>
                             </li>
                             <li>
                                 <label for="start_date">Start date</label>
-                                <input type="date" name="start_date" id="start_date">
+                                <input type="date" name="start_date" id="start_date" required>
+                                <p id="limit_warning"></p>
                             </li>
                             <li>
-                                <button id="add_btn" type="submit">Add</button>
+                                <button id="add_btn" type="button">Add</button>
                             </li>
                         </ul>
                     </form>
                 </section>
                 <!--Section to add budget ends-->
-
-                <!--Section to display budget status begins-->
-                <section class="section_budget_status">
-                    <div class="display_summary_container">
-                        <div class="pie-chart" id="pie-chart">
-                            <script>
-                                //Define data: values and colors for each slice
-                                const data = [
-                                    {value: 30, color: '#007bff'},
-                                    {value: 50, color: '#ff5722'},
-                                    {value: 20, color: '#4caf50'}
-                                ];
-
-                                //calculate total value of all data points
-                                const totalValue = data.reduce((total, slice) => total + slice.value, 0);
-
-                                //get pie chart container
-                                const pieChart = document.getElementById('pie-chart');
-
-                                //create slice based on data
-                                let startAngle = 0;
-                                data.forEach((sliceData, index) => {
-                                    const slice = document.createElement('div');
-                                    slice.className = 'slice';
-                                    slice.style.backgroundColor = sliceData.color;
-
-                                    //calculate angle for this slice
-                                    const angle = (sliceData.value / totalValue) * 360;
-
-                                    //apply rotationto position the slice correctly
-                                    slice.style.transform = `rotate(${startAngle}deg)`;
-                                    startAngle += angle;
-
-                                    //append slice to pie container
-                                    pieChart.appendChild(slice);
-                                });
-                            </script>
-                        </div>
-
-                        <div class="display_area_digits">
-                            <div>
-                                <h4 id="limit_digit_header">Limit:</h4>
-                                <p id="limit_dig_para">4000</p>
-                            </div>
-                            <div>
-                                <h4 id="remaining_digit_header">Remaining:</h4>
-                                <p id="limit_dig_para">2000</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!--Section to display budget status ends-->
 
                 <!--Section to display revenue and expense status begins-->
                 <section class="section_revenue_and_expense_status">
@@ -105,15 +54,15 @@
                         <div class="limit_progress_bar">
                             <div><img src="assets/icons/limit.png" alt="like" height="40px"></div>
                             <div class="progress_digits">
-                                <h4 id="limit_digit_header">Limit: <span id="limit_amount">4000</span></h4>
-                                <meter min="0" max="4000" value="3500">3500</meter>
+                                <h4 id="limit_digit_header">Limit: <span id="limit_amount"></span></h4>
+                                <meter id="limit_meter" min="0" max="" value=""></meter>
                             </div>
                         </div>
                         <div class="spent_progress_bar">
                             <div><img src="assets/icons/spent.png" alt="clock" height="40px"></div>
                             <div class="progress_digits">
-                                <h4 id="expense_digit_header">Spent: <span id="spent_amount"></span>2000</h4>
-                                <meter min="0" max="4000" value="3500">3500</meter>
+                                <h4 id="expense_digit_header">Spent: <span id="spent_amount"></span></h4>
+                                <meter id="expense_meter" min="0" max="" value=""></meter>
                             </div>
                         </div>
                         <div class="remaining_progress_bar">
@@ -128,6 +77,31 @@
                     <div class="status_display_container"></div>
                 </section>
                 <!--Section to display revenue and expense status ends-->
+
+                <!--Section to display budget status begins-->
+                <section class="section_categories_display">
+                    <h3>Categories</h3>
+                    <div class="category_container">
+                        <div class="category_item_display">
+                            <div class="cat_img">
+                                <img src="assets/icons/limit.png" alt="" height="40px">
+                            </div>
+                            <h4>Cat 1</h4>
+                            <p>2000</p>
+                        </div>
+
+                        <div class="category_item_display">
+                            <div class="cat_img">
+                                <img src="assets/icons/limit.png" alt="" height="40px">
+                            </div>
+                            <h4>Cat 2</h4>
+                            <p>2000</p>
+                        </div>
+                    </div>
+                </section>
+                <!--Section to display budget status ends-->
+
+
             </div>
 
             <div class="main_2">
@@ -138,7 +112,7 @@
                             <ul>
                                 <li>
                                     <label for="add_revenue">Add revenue</label>
-                                    <select name="add_revenue_category" id="add_revenue">
+                                    <select name="add_revenue_category" id="add_revenue" required>
                                         <option value="">Cat1</option>
                                         <option value="">Cat2</option>
                                         <option value="">Cat3</option>
@@ -147,7 +121,7 @@
                                 </li>
                                 <li>
                                     <label for="add_rev_amount">Amount</label>
-                                    <input type="number" id="add_rev_amount" placeholder="Enter amount">
+                                    <input type="number" id="add_rev_amount" placeholder="Enter amount" required>
                                 </li>
                                 <li><button id="add_rev_btn" type="submit">Add</button></li>
                             </ul>
@@ -161,7 +135,7 @@
                             <ul>
                                 <li>
                                     <label for="add_expense">Add expense</label>
-                                    <select name="add_exp_category" id="add_expense">
+                                    <select name="add_exp_category" id="add_expense" required>
                                         <option value="">Cat1</option>
                                         <option value="">Cat2</option>
                                         <option value="">Cat3</option>
@@ -170,16 +144,65 @@
                                 </li>
                                 <li>
                                     <label for="add_exp_amount">Amount</label>
-                                    <input type="number" id="add_exp_amount" placeholder="Enter amount">
+                                    <input type="number" id="add_exp_amount" placeholder="Enter amount" required>
+                                    <p id="expense_warning"></p>
                                 </li>
                                 <li>
-                                    <button id="add_exp_btn" type="submit">Add</button>
+                                    <button id="add_exp_btn" type="button">Add</button>
                                 </li>
                             </ul>
                         </div>
                     </form>
                 </div>
-                <div></div>
+
+                <div>
+                    <!--Section to display budget status begins-->
+                    <section class="section_budget_status">
+                        <div class="display_summary_container">
+                            <div class="pie-chart" id="pie-chart">
+                                <script>
+                                    const pieChart = document.getElementById('pie-chart');
+                                    const data = [30, 20, 50]; // Example data, values in percentage
+
+                                    let startAngle = 0;
+                                    for (let i = 0; i < data.length; i++) {
+                                        const slice = document.createElement('div');
+                                        slice.className = 'slice';
+
+                                        const angle = (data[i] / 100) * 360;
+                                        slice.style.transform = `rotate(${startAngle}deg)`;
+                                        slice.style.background = getRandomColor(); // Generate a random color
+                                        slice.style.transform += `rotate(${angle}deg)`;
+
+                                        pieChart.appendChild(slice);
+                                        startAngle += angle;
+                                    }
+
+                                    function getRandomColor() {
+                                        const letters = '0123456789ABCDEF';
+                                        let color = '#';
+                                        for (let i = 0; i < 6; i++) {
+                                            color += letters[Math.floor(Math.random() * 16)];
+                                        }
+                                        return color;
+                                    }
+                                </script>
+                            </div>
+
+                            <div class="display_area_digits">
+                                <div>
+                                    <h4 id="limit_digit_header">Limit:</h4>
+                                    <p id="limit_dig_para"></p>
+                                </div>
+                                <div>
+                                    <h4 id="remaining_digit_header">Remaining:</h4>
+                                    <p id="limit_dig_para">2000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--Section to display budget status ends-->
+                </div>
             </div>
         </section>
 
@@ -195,6 +218,10 @@
             </nav>
         </div>
     </footer>
+
+    <!--External JavaScript-->
+    <script type="module" src="js/main.js"></script>
+
 </body>
 
 </html>
