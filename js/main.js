@@ -1,8 +1,10 @@
 import { validateLimitForm, resetLimit, resetExpense, limitUpdate, validateExpenseForm,
 expenseUpdate, remainUpdate } from "./utility.js";
 
+import { categoryCard } from "./card.js";
+
 const btn1 = document.getElementById('add_btn');
-const btn2 = document.getElementById('add_exp_btn')
+const btn2 = document.getElementById('add_exp_btn');
 
 btn1.addEventListener('click', () => {
     const isValidate = validateLimitForm();
@@ -21,7 +23,8 @@ btn2.addEventListener('click', () => {
     if (!isValidate) {
         return;
     }
-
+    
+    categoryCard();
     expenseUpdate();
     remainUpdate();
     resetExpense();

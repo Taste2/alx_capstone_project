@@ -48,6 +48,12 @@ function validateExpenseForm() {
 
         return false;
     }
+    if (limit_meter.value <= 0) {
+        error2.style.color = 'red'
+        error2.innerHTML = 'Please set budget limit before spending!'
+
+        return false;
+    }
     error2.innerHTML = ''//error message to empty string if validated
     return true;
 }
