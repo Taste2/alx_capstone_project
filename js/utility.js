@@ -1,15 +1,19 @@
 // get elements
-const error1 = document.getElementById('limit_warning')
+
 const set_limit = document.getElementById('limit');
 const start_date = document.getElementById('start_date');
+const error1 = document.getElementById('limit_warning')
 const graph_limit = document.getElementById('limit_amount');
-const graph_spent = document.getElementById('spent_amount');
-const pie_limit = document.getElementById('limit_dig_para');
 const limit_meter = document.getElementById('limit_meter');
+const graph_spent = document.getElementById('spent_amount');
 const expense_meter = document.getElementById('expense_meter');
+const graph_remaining = document.getElementById('remaining_amount');
+const remaining_meter = document.getElementById('remaining_meter');
+const pie_limit = document.getElementById('limit_dig_para');
 const expense_cat = document.getElementById('add_expense');
 const expense_amount = document.getElementById('add_exp_amount');
-const error2 = document.getElementById('expense_warning')
+const error2 = document.getElementById('expense_warning');
+const overspent_warning = document.getElementById('overspent');
 
 // function to validate limit form
 function validateLimitForm() {
@@ -66,7 +70,8 @@ function limitUpdate() {
     pie_limit.innerHTML = parseInt(set_limit.value, 10);
     limit_meter.setAttribute('max', set_limit.value);
     limit_meter.setAttribute('value', set_limit.value);
-    expense_meter.setAttribute('max', set_limit.value)
+    expense_meter.setAttribute('max', set_limit.value);
+    remaining_meter.setAttribute('max', set_limit.value);
 
 }
 
@@ -80,7 +85,23 @@ function expenseUpdate() {
         graph_spent.innerHTML = graph_spent.value;
     }
     expense_meter.setAttribute('value', graph_spent.value)
-    
+
+}
+
+// function to update remaining amount
+function remainUpdate() {
+    const difference = limit_meter.value - graph_spent.value;
+    graph_remaining.innerHTML = difference;
+    remaining_meter.setAttribute('value', difference);
+
+    if (difference < 0) {
+        const overspent = -difference
+        overspent_warning.style.color = 'red';
+        overspent_warning.innerHTML = "You have overspent by " + overspent;
+        graph_remaining.innerHTML = 0;
+        graph_spent.style.color = 'red';
+
+    }
 }
 
 // export functions
@@ -90,5 +111,6 @@ export {
     resetExpense,
     limitUpdate,
     validateExpenseForm,
-    expenseUpdate
+    expenseUpdate,
+    remainUpdate
 }
