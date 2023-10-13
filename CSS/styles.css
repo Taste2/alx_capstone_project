@@ -8,7 +8,7 @@
 }
 
 
-header {
+/* header {
     border: 1px solid red;
 }
 div {
@@ -19,7 +19,7 @@ section {
 }
 main {
     border: 2px solid blue;
-}
+} */
 
 
 body {
@@ -141,13 +141,13 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    border: 3px solid black;
 }
 
 .category_container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    overflow-y: auto;
 }
 
 .category_items_display {
@@ -159,6 +159,18 @@ main {
     border-radius: 10px;
     box-shadow: 0 0 0 0.2px;
     padding-top: 5px;
+}
+
+.cat_label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cat_label p,
+.cat_label h4 {
+    margin-top: 5px;
 }
 
 /**Section Display Budget Status**/

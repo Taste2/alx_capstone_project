@@ -17,7 +17,12 @@ const overspent_warning = document.getElementById('overspent');
 
 // function to validate limit form
 function validateLimitForm() {
-
+    // // if (graph_limit.innerHTML != '') {
+    // //     graph_spent.innerHTML = '';
+    // //     expense_meter.setAttribute('value', 0);
+    // //     remaining_meter.setAttribute('value', 0);
+    // //     graph_remaining.innerHTML = '';
+    // }
     if (set_limit.value === "" || start_date.value === "") {
         error1.style.color = 'red'
         error1.innerHTML = 'Please fill all fields!'
