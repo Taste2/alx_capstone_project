@@ -15,7 +15,7 @@ function categoryCard() {
     card_display.appendChild(card_label);
 
     const category_icon = document.createElement('img');
-    category_icon.setAttribute('src', 'assets/icons/limit.png');
+    category_icon.setAttribute('src', 'assets/icons/pay.png');
     category_icon.setAttribute('height', '40px')
     card_label.appendChild(category_icon);
 

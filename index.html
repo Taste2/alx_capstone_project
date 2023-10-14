@@ -5,18 +5,15 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>iWallet Budget Tracker</title>
 </head>
 
 <body>
     <!--Header begins-->
     <header id="header_container" class="header">
-        <img class="header_logo" src="assets/icons/logo.png" alt="logo" height="40px">
-        <div class="nav_links_container">
-            <nav class="nav_links">
-                <a href="#">Events</a>
-                <a href="#">Finance</a>
-            </nav>
+        <div class="logo_container">
+            <img class="header_logo" src="assets/icons/logo.png" alt="logo" height="40px">
+            <p><strong>iWallet</strong></p>
         </div>
     </header>
     <!--Header ends-->
@@ -82,21 +79,6 @@
                 <section id="section_categories_display" class="section_categories_display">
                     <h3>Categories</h3>
                     <div id="category_container" class="category_container">
-                        <!-- <div class="category_item_display">
-                            <div class="cat_img">
-                                <img src="assets/icons/limit.png" alt="" height="40px">
-                            </div>
-                            <h4>Cat 1</h4>
-                            <p>2000</p>
-                        </div>
-
-                        <div class="category_item_display">
-                            <div class="cat_img">
-                                <img src="assets/icons/limit.png" alt="" height="40px">
-                            </div>
-                            <h4>Cat 2</h4>
-                            <p>2000</p>
-                        </div> -->
                     </div>
                 </section>
                 <!--Section to display budget status ends-->
@@ -192,7 +174,7 @@
                                     let startAngle = 0;
                                     for (let i = 0; i < data.length; i++) {
                                         const slice = document.createElement('div');
-                                        slice.className = 'slice';
+                                        slice.classList.add('slice');
 
                                         const angle = (data[i] / 100) * 360;
                                         slice.style.transform = `rotate(${startAngle}deg)`;
