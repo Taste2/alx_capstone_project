@@ -76,24 +76,31 @@ function resetExpense() {
 }
 
 //function to update all limit fields
-function limitUpdate() {
-    graph_limit.innerHTML = parseInt(set_limit.value, 10);
-    pie_limit.innerHTML = parseInt(set_limit.value, 10);
-    limit_meter.setAttribute('max', set_limit.value);
-    limit_meter.setAttribute('value', set_limit.value);
-    expense_meter.setAttribute('max', set_limit.value);
-    remaining_meter.setAttribute('max', set_limit.value);
+function limitUpdate(budget_data_array) {
+    const budget_limit = budget_data_array[0]['budget']['limit_data'];
+    graph_limit.textContent = budget_limit;
+    pie_limit.innerHTML = budget_limit;
+    limit_meter.setAttribute('max', budget_limit);
+    limit_meter.setAttribute('value', budget_limit);
+    expense_meter.setAttribute('max', budget_limit);
+    remaining_meter.setAttribute('max', budget_limit);
 
 }
 
+
 // function to update spent money
-function expenseUpdate() {
+let i = 2; //position to iterate budget data
+function expenseUpdate (budget_data_array) {
     if (!graph_spent.value) {
-        graph_spent.value = parseInt(expense_amount.value, 10);
-        graph_spent.innerHTML = graph_spent.value;
+        const initial_expense = parseInt(budget_data_array[1]['expense']['amount'], 10);
+        graph_spent.value = initial_expense;
+        graph_spent.innerHTML = initial_expense;
     } else {
-        graph_spent.value += parseInt(expense_amount.value, 10);
-        graph_spent.innerHTML = graph_spent.value;
+        for (; i < budget_data_array.length; i++) {
+            const amount = budget_data_array[i]['expense']['amount'];
+            graph_spent.value += parseInt(amount, 10);
+            graph_spent.innerHTML = graph_spent.value;
+        }
     }
     expense_meter.setAttribute('value', graph_spent.value)
 
@@ -115,6 +122,23 @@ function remainUpdate() {
     }
 }
 
+//function that retrieves data from the limit input fields
+function limitData() {
+    const limit_data = set_limit.value;
+    const start_date_data = start_date.value;
+    const budget = { 'budget': { limit_data, start_date_data } };
+    return budget;
+}
+
+//function to retrieve data from expense added
+function expenseData() {
+    const expense_category = expense_cat.value;
+    const amount = expense_amount.value;
+    const expense = { 'expense': { expense_category, amount } };
+
+    return expense;
+}
+
 // export functions
 export {
     validateLimitForm,
@@ -123,5 +147,7 @@ export {
     limitUpdate,
     validateExpenseForm,
     expenseUpdate,
-    remainUpdate
+    remainUpdate,
+    limitData,
+    expenseData
 }
