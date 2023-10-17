@@ -186,6 +186,12 @@ main {
 
 .edit_del_container {
     display: flex;
+    
+}
+
+.edit_del_container button{
+    border-radius: 5px;
+    font-weight: bold;
 }
 
 button:hover {

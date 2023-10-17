@@ -35,10 +35,14 @@
                             <li>
                                 <label for="start_date">Start date</label>
                                 <input type="date" name="start_date" id="start_date" required>
+                            </li>
+                            <li>
+                                <label for="end_date">End date</label>
+                                <input type="date" name="start_date" id="end_date" required>
                                 <p id="limit_warning"></p>
                             </li>
                             <li>
-                                <button id="add_btn" type="button">Add</button>
+                                <button id="add_btn" type="button">Add budget</button>
                             </li>
                         </ul>
                     </form>
@@ -70,7 +74,9 @@
                             </div>
                         </div>
                         <span id="overspent"></span>
+                        <button type="button" id="save_btn">Save budget details</button>
                     </div>
+                    <!-- this area dynamically created with javascript -->
                     <div class="status_display_container"></div>
                 </section>
                 <!--Section to display revenue and expense status ends-->
@@ -155,7 +161,7 @@
                                     <p id="expense_warning"></p>
                                 </li>
                                 <li>
-                                    <button id="add_exp_btn" type="button">Add</button>
+                                    <button id="add_exp_btn" type="button">Add new expense</button>
                                 </li>
                             </ul>
                         </div>
