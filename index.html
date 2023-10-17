@@ -27,6 +27,7 @@
                 <!--Section to add budget begins-->
                 <section class="section_add_budget">
                     <form id="form_container" class="form_container" action="#" method="post">
+                        <h4>Budget Setting</h4>
                         <ul>
                             <li>
                                 <label for="limit">Set limit</label>
@@ -52,6 +53,7 @@
                 <!--Section to display revenue and expense status begins-->
                 <section class="section_revenue_and_expense_status">
                     <div class="status_digits_container">
+                        <h4>Budget Summary</h4>
                         <div class="limit_progress_bar">
                             <div><img src="assets/icons/limit.png" alt="like" height="40px"></div>
                             <div class="progress_digits">
@@ -83,7 +85,7 @@
 
                 <!--Section to display budget status begins-->
                 <section id="section_categories_display" class="section_categories_display">
-                    <h3>Categories</h3>
+                    <h3>Expense Categories</h3>
                     <div id="category_container" class="category_container">
                     </div>
                 </section>
@@ -96,33 +98,42 @@
                 <div class="add_revenue_container">
                     <form action="#" method="post">
                         <!--Form to add revenue-->
+                        <h4>Add Revenue</h4>
                         <div>
                             <ul>
                                 <li>
-                                    <label for="add_revenue">Add revenue</label>
+                                    <label for="add_revenue">Category</label>
                                     <select name="add_revenue_category" id="add_revenue" required>
-                                        <option value="">Cat1</option>
-                                        <option value="">Cat2</option>
-                                        <option value="">Cat3</option>
-                                        <option value="">Cat4</option>
+                                        <option value="Rental">Rental</option>
+                                        <option value="Grants">Grants</option>
+                                        <option value="Dividends">Dividends</option>
+                                        <option value="Refunds">Salary</option>
+                                        <option value="Refunds">Sale</option>
+                                        <option value="Refunds">Awards</option>
+                                        <option value="Refunds">Coupons</option>
+                                        <option value="Refunds">Gift</option>
+                                        <option value="Refunds">Refunds</option>
+                                        <option value="Refunds">Others</option>
                                     </select>
                                 </li>
                                 <li>
                                     <label for="add_rev_amount">Amount</label>
                                     <input type="number" id="add_rev_amount" placeholder="Enter amount" required>
+                                    <p id="revenue_warning"></p>
                                 </li>
-                                <li><button id="add_rev_btn" type="submit">Add</button></li>
+                                <li><button id="add_rev_btn" type="button">Add new revenue</button></li>
                             </ul>
                         </div>
                     </form>
                 </div>
                 <div class="add_expense_container">
                     <form action="#" method="post">
+                        <h4>Add Expense</h4>
                         <!--Form to add expenses-->
                         <div>
                             <ul>
                                 <li>
-                                    <label for="add_expense">Add expense</label>
+                                    <label for="add_expense">Category</label>
                                     <select name="add_exp_category" id="add_expense" required>
                                         <option value="Food">Food</option>
                                         <option value="Clothing">Clothing</option>
@@ -172,46 +183,7 @@
                     <!--Section to display budget status begins-->
                     <section class="section_budget_status">
                         <div class="display_summary_container">
-                            <div class="pie-chart" id="pie-chart">
-                                <script>
-                                    const pieChart = document.getElementById('pie-chart');
-                                    const data = [30, 20, 50]; // Example data, values in percentage
-
-                                    let startAngle = 0;
-                                    for (let i = 0; i < data.length; i++) {
-                                        const slice = document.createElement('div');
-                                        slice.classList.add('slice');
-
-                                        const angle = (data[i] / 100) * 360;
-                                        slice.style.transform = `rotate(${startAngle}deg)`;
-                                        slice.style.background = getRandomColor(); // Generate a random color
-                                        slice.style.transform += `rotate(${angle}deg)`;
-
-                                        pieChart.appendChild(slice);
-                                        startAngle += angle;
-                                    }
-
-                                    function getRandomColor() {
-                                        const letters = '0123456789ABCDEF';
-                                        let color = '#';
-                                        for (let i = 0; i < 6; i++) {
-                                            color += letters[Math.floor(Math.random() * 16)];
-                                        }
-                                        return color;
-                                    }
-                                </script>
-                            </div>
-
-                            <div class="display_area_digits">
-                                <div>
-                                    <h4 id="limit_digit_header">Limit:</h4>
-                                    <p id="limit_dig_para"></p>
-                                </div>
-                                <div>
-                                    <h4 id="remaining_digit_header">Remaining:</h4>
-                                    <p id="limit_dig_para">2000</p>
-                                </div>
-                            </div>
+                           
                         </div>
                     </section>
                     <!--Section to display budget status ends-->

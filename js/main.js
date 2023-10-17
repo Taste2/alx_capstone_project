@@ -1,16 +1,20 @@
 import {
     validateLimitForm, resetLimit, resetExpense, limitUpdate, validateExpenseForm,
-    expenseUpdate, remainUpdate, limitData, expenseData, populateExpenseField
+    expenseUpdate, remainUpdate, limitData, expenseData, populateExpenseField, validateRevenueForm,
+    resetRevenue, revenueData
 } from "./utility.js";
 
 //retrieve button elements
 const btn1 = document.getElementById('add_btn');
 const btn2 = document.getElementById('add_exp_btn');
 const btn3 = document.getElementById('save_btn');
+const btn4 = document.getElementById('add_rev_btn');
 
 //array to store objects when buttons are clicked
 const budget_data_array = [];
+const revenue_data_array = [];
 
+//set up budget button
 btn1.addEventListener('click', () => {
     const isValidate = validateLimitForm();
 
@@ -28,6 +32,7 @@ btn1.addEventListener('click', () => {
 })
 
 let current_card_position = -1;
+//add expense button
 btn2.addEventListener('click', () => {
     const isValidate = validateExpenseForm();
 
@@ -51,8 +56,33 @@ btn2.addEventListener('click', () => {
     resetExpense();
 })
 
+//generate all budget details for export 
 btn3.addEventListener('click', () => {
-    allBudgetData(budget_data_array);
+    allBudgetData(budget_data_array, revenue_data_array);
+})
+
+//add revenue button
+btn4.addEventListener('click', () => {
+    const isValidate = validateRevenueForm();
+
+    if (!isValidate) {
+        return;
+    }
+
+    const revenue_fields_data = revenueData();//revenue info object
+    if (btn4.textContent === 'Edit revenue') {
+        revenue_data_array[current_card_position] = revenue_fields_data;
+        btn4.textContent = 'Add new revenue'
+    } else {
+        revenue_data_array.push(revenue_fields_data);// add objet to the array
+    }
+    
+    console.log(revenue_data_array);
+
+    // createCard(budget_data_array)
+    // expenseUpdate(budget_data_array);
+    // remainUpdate();
+    resetRevenue();
 })
 
 
@@ -70,9 +100,6 @@ function createCard(budget_data_array) {
 function categoryCard(card, budget_data_array, index) {
     const graph_spent = document.getElementById('spent_amount');
     const expense_meter = document.getElementById('expense_meter');
-    const expense_cat = document.getElementById('add_expense');
-    const expense_amount = document.getElementById('add_exp_amount');
-    const btn2 = document.getElementById('add_exp_btn');
     const card_container = document.getElementById('category_container');
 
     const card_display = document.createElement('div');
@@ -137,12 +164,34 @@ function categoryCard(card, budget_data_array, index) {
     })
 }
 
-//store all data in array
-// function allBudgetData (budget_data_array) {
-//     let all_data = {'Budget':budget_data_array[0]['budget']};
-//     for (let i = 1; i < budget_data_array.length; i++) {
-//         const expense = budget_data_array[i]['expense'];
-//         all_data['Expense'] = expense['expense_category'] : expense['amount']
-//     }
-//     console.log(all_data);
-// }
+//store all data in object
+function allBudgetData (budget_data_array, revenue_data_array) {
+    const graph_remaining = document.getElementById('remaining_amount');
+    const overspent_warning = document.getElementById('overspent');
+    let all_data = {
+        'Budget':{
+            'budget-limit':budget_data_array[0]['budget']['limit_data'],
+            'start-date':budget_data_array[0]['budget']['start_budget_date'],
+            'end-date':budget_data_array[0]['budget']['end_budget_date'],},
+        'Expense':{},
+        'Remaining':{
+            'budget-amount-remains':graph_remaining.value,
+            'overspent':overspent_warning.value
+        },
+        'Revenue':{}
+    };
+    for (let i = 1; i < budget_data_array.length; i++) {
+        const expense = budget_data_array[i]['expense'];
+        const category = expense['expense_category'];
+        const amount = expense['amount'];
+        all_data['Expense'][category] = amount;
+    }
+
+    for (let i = 0; i < revenue_data_array.length; i++) {
+        const revenue = revenue_data_array[i]['revenue'];
+        const category = revenue['revenue_category'];
+        const amount = revenue['amount'];
+        all_data['Revenue'][category] = amount;
+    }
+    console.log(all_data);
+}

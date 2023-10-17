@@ -13,7 +13,10 @@ const remaining_meter = document.getElementById('remaining_meter');
 const pie_limit = document.getElementById('limit_dig_para');
 const expense_cat = document.getElementById('add_expense');
 const expense_amount = document.getElementById('add_exp_amount');
+const revenue_cat = document.getElementById('add_revenue');
+const revenue_amount = document.getElementById('add_rev_amount');
 const error2 = document.getElementById('expense_warning');
+const error3 = document.getElementById('revenue_warning');
 const overspent_warning = document.getElementById('overspent');
 const btn2 = document.getElementById('add_exp_btn');
 const category_container = document.getElementById('category_container');
@@ -73,6 +76,28 @@ function validateExpenseForm() {
     return true;
 }
 
+function validateRevenueForm() {
+    if (revenue_amount.value === "") {
+        error3.style.color = 'red'
+        error3.textContent = 'Please fill all fields!'
+
+        return false;
+    }
+    if (revenue_amount.value <= 0) {
+        error3.style.color = 'red'
+        error3.textContent = 'Please enter the right amount!'
+
+        return false;
+    }
+    if (limit_meter.value <= 0) {
+        error3.style.color = 'red'
+        error3.textContent = 'Please set up budget'
+
+        return false;
+    }
+    error3.innerHTML = ''//error message to empty string if validated
+    return true;
+}
 
 //reset the limit form after submit
 function resetLimit() {
@@ -81,9 +106,14 @@ function resetLimit() {
     end_date.value = '';
 }
 
-//reset the limit form after submit
+//reset the expense form after submit
 function resetExpense() {
     expense_amount.value = "";
+}
+
+//reset the revenue form after submission
+function resetRevenue() {
+    revenue_amount.value = "";
 }
 
 //function to update all limit areas and reset summary
@@ -105,7 +135,7 @@ function limitUpdate(budget_data_array) {
 }
 
 
-// function to add all expenses and update spent money fields
+// function to add all expenses and update spent graph fields
 function expenseUpdate (budget_data_array) {
     let total_amount = 0;
     for (let i = 1; i < budget_data_array.length; i++) {
@@ -121,19 +151,23 @@ function expenseUpdate (budget_data_array) {
 // function to update remaining amount
 function remainUpdate() {
     const difference = limit_meter.value - graph_spent.value;
-    graph_remaining.innerHTML = difference;
+    graph_remaining.value = difference;
+    graph_remaining.textContent = graph_remaining.value
     remaining_meter.setAttribute('value', difference);
 
     if (difference < 0) {
         const overspent = -difference
         overspent_warning.style.color = 'red';
-        overspent_warning.textContent = "You have overspent by " + overspent;
+        overspent_warning.value = overspent;
+        overspent_warning.textContent = "You have overspent budget by " + overspent;
         graph_remaining.textContent = 0;
+        graph_remaining.value = 0;
         graph_spent.style.color = 'red';
     }
     else {
         overspent_warning.textContent = ''
         graph_spent.style.color = 'black';
+        overspent_warning.value = 0;
     }
 }
 
@@ -155,6 +189,15 @@ function expenseData() {
     return expense;
 }
 
+//function to retrieve data from revenue form
+function revenueData() {
+    const revenue_category = revenue_cat.value;
+    const amount = revenue_amount.value;
+    const revenue = { 'revenue': { revenue_category, amount } };
+
+    return revenue;
+}
+
 //function to repopulate expense field to edit
 function populateExpenseField (card) {
     expense_cat.value = card['expense_category'];
@@ -173,5 +216,8 @@ export {
     remainUpdate,
     limitData,
     expenseData,
-    populateExpenseField
+    populateExpenseField,
+    validateRevenueForm,
+    resetRevenue,
+    revenueData
 }
