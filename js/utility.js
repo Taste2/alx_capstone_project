@@ -10,7 +10,6 @@ const graph_spent = document.getElementById('spent_amount');
 const expense_meter = document.getElementById('expense_meter');
 const graph_remaining = document.getElementById('remaining_amount');
 const remaining_meter = document.getElementById('remaining_meter');
-const pie_limit = document.getElementById('limit_dig_para');
 const expense_cat = document.getElementById('add_expense');
 const expense_amount = document.getElementById('add_exp_amount');
 const revenue_cat = document.getElementById('add_revenue');
@@ -19,7 +18,9 @@ const error2 = document.getElementById('expense_warning');
 const error3 = document.getElementById('revenue_warning');
 const overspent_warning = document.getElementById('overspent');
 const btn2 = document.getElementById('add_exp_btn');
+const btn4 = document.getElementById('add_rev_btn');
 const category_container = document.getElementById('category_container');
+const rev_card_section = document.getElementById('display_revenue_container')
 
 // function to validate limit form
 function validateLimitForm() {
@@ -120,7 +121,6 @@ function resetRevenue() {
 function limitUpdate(budget_data_array) {
     const budget_limit = budget_data_array[0]['budget']['limit_data'];
     graph_limit.textContent = budget_limit;
-    pie_limit.textContent = budget_limit;
     limit_meter.setAttribute('max', budget_limit);
     limit_meter.setAttribute('value', budget_limit);
     graph_spent.value = 0;
@@ -132,6 +132,7 @@ function limitUpdate(budget_data_array) {
     graph_remaining.textContent = '';
     category_container.innerHTML = '';
     overspent_warning.textContent = '';
+    rev_card_section.innerHTML = '';
 }
 
 
@@ -205,6 +206,13 @@ function populateExpenseField (card) {
     btn2.textContent = 'Edit expense';
 }
 
+//function to repopulate revenue field to edit
+function populateRevenueField (card) {
+    revenue_cat.value = card['revenue_category'];
+    revenue_amount.value = card['amount'];
+    btn4.textContent = 'Edit revenue';
+}
+
 // export functions
 export {
     validateLimitForm,
@@ -217,6 +225,7 @@ export {
     limitData,
     expenseData,
     populateExpenseField,
+    populateRevenueField,
     validateRevenueForm,
     resetRevenue,
     revenueData

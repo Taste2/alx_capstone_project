@@ -86,7 +86,7 @@ main {
     align-items: center;
 }
 
-.section_budget_status,
+.section_revenue_status,
 .section_revenue_and_expense_status,
 .section_categories_display {
     margin-top: 15px;
@@ -134,7 +134,8 @@ main {
     justify-content: space-around;
 }
 
-.category_container {
+.category_container,
+.display_revenue_container{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;

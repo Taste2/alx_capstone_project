@@ -1,7 +1,7 @@
 import {
     validateLimitForm, resetLimit, resetExpense, limitUpdate, validateExpenseForm,
     expenseUpdate, remainUpdate, limitData, expenseData, populateExpenseField, validateRevenueForm,
-    resetRevenue, revenueData
+    resetRevenue, revenueData, populateRevenueField
 } from "./utility.js";
 
 //retrieve button elements
@@ -24,6 +24,7 @@ btn1.addEventListener('click', () => {
 
     const limit_fields_data = limitData();//budget limit and date object
     budget_data_array.length = 0;
+    revenue_data_array.length = 0;
     budget_data_array.push(limit_fields_data); //store in the new array
     console.log(budget_data_array);
 
@@ -62,6 +63,7 @@ btn3.addEventListener('click', () => {
 })
 
 //add revenue button
+let current_rev_card_position = -1;
 btn4.addEventListener('click', () => {
     const isValidate = validateRevenueForm();
 
@@ -71,22 +73,21 @@ btn4.addEventListener('click', () => {
 
     const revenue_fields_data = revenueData();//revenue info object
     if (btn4.textContent === 'Edit revenue') {
-        revenue_data_array[current_card_position] = revenue_fields_data;
-        btn4.textContent = 'Add new revenue'
+        revenue_data_array[current_rev_card_position] = revenue_fields_data;
+        btn4.textContent = 'Add new revenue';
+        current_card_position = -1;
     } else {
         revenue_data_array.push(revenue_fields_data);// add objet to the array
     }
     
     console.log(revenue_data_array);
 
-    // createCard(budget_data_array)
-    // expenseUpdate(budget_data_array);
-    // remainUpdate();
+    createRevenueCard(revenue_data_array)
     resetRevenue();
 })
 
 
-//loop through budget data array to create cards
+//loop through budget data array to create expense cards
 function createCard(budget_data_array) {
     const card_section = document.getElementById('category_container');
     card_section.innerHTML = '';// clear previous cards
@@ -96,7 +97,17 @@ function createCard(budget_data_array) {
     }
 }
 
-// function to create the category card
+//loop through budget data array to create revenue cards
+function createRevenueCard(revenue_data_array) {
+    const card_section = document.getElementById('display_revenue_container');
+    card_section.innerHTML = '';// clear previous cards
+    for (let index = 0; index < revenue_data_array.length; index++) {
+        const card = revenue_data_array[index]['revenue'];
+        revenueCategoryCard(card, revenue_data_array, index); //recreate cards with current data
+    }
+}
+
+// function to create the expense category card
 function categoryCard(card, budget_data_array, index) {
     const graph_spent = document.getElementById('spent_amount');
     const expense_meter = document.getElementById('expense_meter');
@@ -161,6 +172,68 @@ function categoryCard(card, budget_data_array, index) {
 
         //update the remaining balance area
         remainUpdate();
+    })
+}
+
+//function to create revenue cards
+function revenueCategoryCard(card, revenue_data_array, index) {
+    const card_container = document.getElementById('display_revenue_container');
+
+    const card_display = document.createElement('div');
+    card_display.classList.add('category_items_display');
+    card_container.appendChild(card_display);
+
+    const card_label = document.createElement('div');
+    card_label.classList.add('cat_label');
+    card_display.appendChild(card_label);
+
+    const category_icon = document.createElement('img');
+    category_icon.setAttribute('src', 'assets/icons/pay.png');
+    category_icon.setAttribute('height', '40px')
+    card_label.appendChild(category_icon);
+
+    const category_name = document.createElement('h4');
+    category_name.innerHTML = card['revenue_category'];
+    card_label.appendChild(category_name);
+
+    const category_amount = document.createElement('p');
+    category_amount.value = card['amount'];
+    category_amount.textContent = category_amount.value;
+    card_label.appendChild(category_amount);
+
+    const edit_delete_btn = document.createElement('div');
+    edit_delete_btn.setAttribute('class', 'edit_del_container');
+    card_display.appendChild(edit_delete_btn)
+
+
+    //edit button
+    const edit_btn = document.createElement('button');
+    edit_btn.setAttribute('type', 'button');
+    edit_btn.textContent = 'Edit'
+    edit_btn.style.backgroundColor = 'blue';
+    edit_delete_btn.appendChild(edit_btn);
+    //event to edit card
+    edit_btn.addEventListener('click', () => {
+       populateRevenueField(card);
+       current_rev_card_position = index; 
+    })
+
+    //delete button
+    const del_btn = document.createElement('button');
+    del_btn.setAttribute('type', 'button');
+    del_btn.textContent = 'Delete'
+    del_btn.style.backgroundColor = 'red';
+    edit_delete_btn.appendChild(del_btn);
+    edit_delete_btn.appendChild(del_btn)
+    //event to delete a card
+    del_btn.addEventListener('click', () => {
+        //delete one at this index
+        revenue_data_array.splice(index, 1);
+        //recreate the remaining cards
+        createRevenueCard(revenue_data_array)
+
+        //update the remaining balance area
+        // remainUpdate();
     })
 }
 
