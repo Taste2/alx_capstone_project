@@ -4,6 +4,7 @@ import {
     resetRevenue, revenueData, populateRevenueField
 } from "./utility.js";
 
+
 //retrieve button elements
 const btn1 = document.getElementById('add_btn');
 const btn2 = document.getElementById('add_exp_btn');
@@ -48,7 +49,7 @@ btn2.addEventListener('click', () => {
     } else {
         budget_data_array.push(expense_fields_data);// add objet to the array
     }
-    
+
     console.log(budget_data_array);
 
     createCard(budget_data_array)
@@ -59,7 +60,9 @@ btn2.addEventListener('click', () => {
 
 //generate all budget details for export 
 btn3.addEventListener('click', () => {
-    allBudgetData(budget_data_array, revenue_data_array);
+    const all_data_obj = allBudgetData(budget_data_array, revenue_data_array);
+    const csvContent = createCSV(all_data_obj);
+    downloadCSV(csvContent);
 })
 
 //add revenue button
@@ -79,7 +82,7 @@ btn4.addEventListener('click', () => {
     } else {
         revenue_data_array.push(revenue_fields_data);// add objet to the array
     }
-    
+
     console.log(revenue_data_array);
 
     createRevenueCard(revenue_data_array)
@@ -144,19 +147,19 @@ function categoryCard(card, budget_data_array, index) {
     const edit_btn = document.createElement('button');
     edit_btn.setAttribute('type', 'button');
     edit_btn.textContent = 'Edit'
-    edit_btn.style.backgroundColor = 'blue';
+    edit_btn.style.backgroundColor = 'lightblue';
     edit_delete_btn.appendChild(edit_btn);
     //event to edit card
     edit_btn.addEventListener('click', () => {
-       populateExpenseField(card);
-       current_card_position = index; 
+        populateExpenseField(card);
+        current_card_position = index;
     })
 
     //delete button
     const del_btn = document.createElement('button');
     del_btn.setAttribute('type', 'button');
     del_btn.textContent = 'Delete'
-    del_btn.style.backgroundColor = 'red';
+    del_btn.style.backgroundColor = 'pink';
     edit_delete_btn.appendChild(del_btn);
     edit_delete_btn.appendChild(del_btn)
     //event to delete a card
@@ -169,6 +172,7 @@ function categoryCard(card, budget_data_array, index) {
         graph_spent.value -= card['amount'];
         graph_spent.textContent = graph_spent.value;
         expense_meter.setAttribute('value', graph_spent.value)
+        btn2.textContent = 'Add new expense';
 
         //update the remaining balance area
         remainUpdate();
@@ -210,19 +214,19 @@ function revenueCategoryCard(card, revenue_data_array, index) {
     const edit_btn = document.createElement('button');
     edit_btn.setAttribute('type', 'button');
     edit_btn.textContent = 'Edit'
-    edit_btn.style.backgroundColor = 'blue';
+    edit_btn.style.backgroundColor = 'lightblue';
     edit_delete_btn.appendChild(edit_btn);
     //event to edit card
     edit_btn.addEventListener('click', () => {
-       populateRevenueField(card);
-       current_rev_card_position = index; 
+        populateRevenueField(card);
+        current_rev_card_position = index;
     })
 
     //delete button
     const del_btn = document.createElement('button');
     del_btn.setAttribute('type', 'button');
     del_btn.textContent = 'Delete'
-    del_btn.style.backgroundColor = 'red';
+    del_btn.style.backgroundColor = 'pink';
     edit_delete_btn.appendChild(del_btn);
     edit_delete_btn.appendChild(del_btn)
     //event to delete a card
@@ -231,6 +235,7 @@ function revenueCategoryCard(card, revenue_data_array, index) {
         revenue_data_array.splice(index, 1);
         //recreate the remaining cards
         createRevenueCard(revenue_data_array)
+        btn4.textContent = 'Add new revenue';
 
         //update the remaining balance area
         // remainUpdate();
@@ -238,20 +243,21 @@ function revenueCategoryCard(card, revenue_data_array, index) {
 }
 
 //store all data in object
-function allBudgetData (budget_data_array, revenue_data_array) {
+function allBudgetData(budget_data_array, revenue_data_array) {
     const graph_remaining = document.getElementById('remaining_amount');
     const overspent_warning = document.getElementById('overspent');
     let all_data = {
-        'Budget':{
-            'budget-limit':budget_data_array[0]['budget']['limit_data'],
-            'start-date':budget_data_array[0]['budget']['start_budget_date'],
-            'end-date':budget_data_array[0]['budget']['end_budget_date'],},
-        'Expense':{},
-        'Remaining':{
-            'budget-amount-remains':graph_remaining.value,
-            'overspent':overspent_warning.value
+        'Budget': {
+            'budget-limit': budget_data_array[0]['budget']['limit_data'],
+            'start-date': budget_data_array[0]['budget']['start_budget_date'],
+            'end-date': budget_data_array[0]['budget']['end_budget_date'],
         },
-        'Revenue':{}
+        'Expense': {},
+        'Remaining': {
+            'budget-amount-remains': graph_remaining.value,
+            'overspent': overspent_warning.value
+        },
+        'Revenue': {}
     };
     for (let i = 1; i < budget_data_array.length; i++) {
         const expense = budget_data_array[i]['expense'];
@@ -267,4 +273,30 @@ function allBudgetData (budget_data_array, revenue_data_array) {
         all_data['Revenue'][category] = amount;
     }
     console.log(all_data);
+    return all_data;
+}
+
+//function to export data
+function createCSV(all_data) {
+    let csvContent = "Category,Key,Value\n";
+    for (const category in all_data) {
+        for (const key in all_data[category]) {
+            const value = all_data[category][key];
+            csvContent += `${category},${key},${value}\n`;
+        }
+    }
+    return csvContent;
+}
+
+function downloadCSV(csvContent) {
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'all_data.csv';
+    a.textContent = 'Download CSV';
+
+    // document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
 }

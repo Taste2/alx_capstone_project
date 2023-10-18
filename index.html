@@ -27,7 +27,7 @@
                 <!--Section to add budget begins-->
                 <section class="section_add_budget">
                     <form id="form_container" class="form_container" action="#" method="post">
-                        <h4>Budget Setting</h4>
+                        <h3>Budget Setting</h3>
                         <ul>
                             <li>
                                 <label for="limit">Set limit</label>
@@ -53,7 +53,7 @@
                 <!--Section to display revenue and expense status begins-->
                 <section class="section_revenue_and_expense_status">
                     <div class="status_digits_container">
-                        <h4>Budget Summary</h4>
+                        <h3>Budget Summary</h3>
                         <div class="limit_progress_bar">
                             <div><img src="assets/icons/limit.png" alt="like" height="40px"></div>
                             <div class="progress_digits">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <span id="overspent"></span>
-                        <button type="button" id="save_btn">Save budget details</button>
+                        <button type="button" id="save_btn">Download budget details</button>
                     </div>
                     <!-- this area dynamically created with javascript -->
                     <div class="status_display_container"></div>
@@ -107,13 +107,13 @@
                                         <option value="Rental">Rental</option>
                                         <option value="Grants">Grants</option>
                                         <option value="Dividends">Dividends</option>
-                                        <option value="Refunds">Salary</option>
-                                        <option value="Refunds">Sale</option>
-                                        <option value="Refunds">Awards</option>
-                                        <option value="Refunds">Coupons</option>
-                                        <option value="Refunds">Gift</option>
+                                        <option value="Salary">Salary</option>
+                                        <option value="Sale">Sale</option>
+                                        <option value="Awards">Awards</option>
+                                        <option value="Coupons">Coupons</option>
+                                        <option value="Gift">Gift</option>
                                         <option value="Refunds">Refunds</option>
-                                        <option value="Refunds">Others</option>
+                                        <option value="Others">Others</option>
                                     </select>
                                 </li>
                                 <li>
@@ -130,12 +130,15 @@
                 <div>
                     <!--Section to display revenue status begins-->
                     <section class="section_revenue_status">
+                        <h3>Revenue Categories</h3>
                         <div id="display_revenue_container" class="display_revenue_container">
                            
                         </div>
                     </section>
-                    <!--Section to display budget status ends-->
+                    <!--Section to display revenue status ends-->
                 </div>
+
+                <div class="divider"></div>
 
                 <div class="add_expense_container">
                     <form action="#" method="post">

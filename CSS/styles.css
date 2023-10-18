@@ -30,7 +30,6 @@ main {
 
 body {
     background-color: rgb(159, 173, 170);
-    flex-wrap: wrap;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -100,14 +99,16 @@ main {
     justify-content: center;
     align-items: center;
 }
+.status_digits_container button {
+    margin-top: 5px;
+}
 
 /*Main 2*/
 .main_2 {
     display: flex;
     flex-direction: column;
-    background-color: whitesmoke;
+    background-color: lightgray;
     padding: 30px;
-    overflow-x: auto;
     overflow-y: auto;
 }
 
@@ -118,6 +119,9 @@ main {
     margin-bottom: 10px;
 }
 
+.add_expense_container  {
+    margin-top: 20px;
+}
 
 .section_budget_status,
 .section_revenue_and_expense_status,
@@ -140,11 +144,16 @@ main {
     flex-wrap: wrap;
     gap: 10px;
     overflow-y: auto;
-    height: 40vh;
+    height: 30vh;
+}
+
+.divider {
+    border: 1px solid grey;
+    margin-top: 10px;
 }
 
 .category_items_display {
-    background-color: rgb(199, 85, 152);
+    background-color: white;
     width: 100px;
     display: flex;
     flex-direction: column;
