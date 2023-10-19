@@ -19,13 +19,14 @@ const error3 = document.getElementById('revenue_warning');
 const overspent_warning = document.getElementById('overspent');
 const btn2 = document.getElementById('add_exp_btn');
 const btn4 = document.getElementById('add_rev_btn');
+const graph_revenue = document.getElementById('total_revenue');
 const category_container = document.getElementById('category_container');
 const rev_card_section = document.getElementById('display_revenue_container')
 
 // function to validate limit form
 function validateLimitForm() {
-    const startDate = new Date(start_date).value;
-    const endDate = new Date(end_date).value
+    const startDate = new Date(start_date.value);
+    const endDate = new Date(end_date.value)
 
     if (set_limit.value === "" || start_date.value === "" || end_date.value === "") {
         error1.style.color = 'red'
@@ -133,6 +134,8 @@ function limitUpdate(budget_data_array) {
     category_container.innerHTML = '';
     overspent_warning.textContent = '';
     rev_card_section.innerHTML = '';
+    graph_revenue.value = 0;
+    graph_revenue.textContent = '';
 }
 
 
@@ -149,6 +152,17 @@ function expenseUpdate (budget_data_array) {
 
 }
 
+// function to add all revenues
+function revenueUpdate (revenue_data_array) {
+    let total_amount = 0;
+    for (let i = 0; i < revenue_data_array.length; i++) {
+        let amount = revenue_data_array[i]['revenue']['amount'];
+        total_amount += parseInt(amount, 10);
+        graph_revenue.value = total_amount;
+        graph_revenue.textContent = graph_revenue.value;
+    }
+}
+
 // function to update remaining amount
 function remainUpdate() {
     const difference = limit_meter.value - graph_spent.value;
@@ -160,7 +174,7 @@ function remainUpdate() {
         const overspent = -difference
         overspent_warning.style.color = 'red';
         overspent_warning.value = overspent;
-        overspent_warning.textContent = "You have overspent budget by " + overspent;
+        overspent_warning.textContent = "You have overspent budget limit by " + overspent;
         graph_remaining.textContent = 0;
         graph_remaining.value = 0;
         graph_spent.style.color = 'red';
@@ -228,5 +242,6 @@ export {
     populateRevenueField,
     validateRevenueForm,
     resetRevenue,
-    revenueData
+    revenueData,
+    revenueUpdate
 }

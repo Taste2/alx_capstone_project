@@ -20,7 +20,8 @@
 
     <!--main begins-->
     <main>
-        <h1>Live within your budget </h1>
+        <h1>iWallet Budget Tracker</h1>
+        <p>Let's help you track where every dime goes</p>
 
         <section class="sections_container">
             <div class="main_1">
@@ -39,7 +40,7 @@
                             </li>
                             <li>
                                 <label for="end_date">End date</label>
-                                <input type="date" name="start_date" id="end_date" required>
+                                <input type="date" name="end_date" id="end_date" required>
                                 <p id="limit_warning"></p>
                             </li>
                             <li>
@@ -74,6 +75,10 @@
                                 <h4 id="rem_exp_header">Remaining: <span id="remaining_amount"></span></h4>
                                 <meter id="remaining_meter" min="0" max="" value=""></meter>
                             </div>
+                        </div>
+                        <div class="revenue_progress">
+                            <div><img src="assets/icons/saving.png" alt="bank" height="40px"></div>
+                            <h4>Total revenue: <span id="total_revenue"></span></h4>
                         </div>
                         <span id="overspent"></span>
                         <button type="button" id="save_btn">Download budget details</button>
@@ -126,6 +131,7 @@
                         </div>
                     </form>
                 </div>
+                <div class="divider"></div>
 
                 <div>
                     <!--Section to display revenue status begins-->
@@ -202,7 +208,7 @@
         <img src="assets/icons/logo.png" alt="logo" height="40px">
         <div>
             <nav>
-                <a href="#">Twitter</a>
+                <a href="https://www.twitter.com/PKTaste">Twitter</a>
                 <a href="#">Facebook</a>
             </nav>
         </div>

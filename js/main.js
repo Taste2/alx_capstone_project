@@ -1,7 +1,7 @@
 import {
     validateLimitForm, resetLimit, resetExpense, limitUpdate, validateExpenseForm,
     expenseUpdate, remainUpdate, limitData, expenseData, populateExpenseField, validateRevenueForm,
-    resetRevenue, revenueData, populateRevenueField
+    resetRevenue, revenueData, populateRevenueField, revenueUpdate
 } from "./utility.js";
 
 
@@ -28,7 +28,7 @@ btn1.addEventListener('click', () => {
     revenue_data_array.length = 0;
     budget_data_array.push(limit_fields_data); //store in the new array
     console.log(budget_data_array);
-
+    
     limitUpdate(budget_data_array);// update the limit meter and label
     resetLimit(); //reset the limitset form to default
 })
@@ -85,7 +85,8 @@ btn4.addEventListener('click', () => {
 
     console.log(revenue_data_array);
 
-    createRevenueCard(revenue_data_array)
+    createRevenueCard(revenue_data_array);
+    revenueUpdate(revenue_data_array);
     resetRevenue();
 })
 
@@ -192,7 +193,7 @@ function revenueCategoryCard(card, revenue_data_array, index) {
     card_display.appendChild(card_label);
 
     const category_icon = document.createElement('img');
-    category_icon.setAttribute('src', 'assets/icons/pay.png');
+    category_icon.setAttribute('src', 'assets/icons/revenue.png');
     category_icon.setAttribute('height', '40px')
     card_label.appendChild(category_icon);
 
@@ -276,7 +277,7 @@ function allBudgetData(budget_data_array, revenue_data_array) {
     return all_data;
 }
 
-//function to export data
+//function to export data into cvs
 function createCSV(all_data) {
     let csvContent = "Category,Key,Value\n";
     for (const category in all_data) {
