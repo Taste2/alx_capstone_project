@@ -9,17 +9,19 @@
 - add expenditure
 - know balance
 - graphical representation of expenses
-- financial tips
 
 ## Technologies Used:
 - Front End: HTML, CSS
-- Back End: JAVASCRIPT, API, MySQL
+- Back End: JAVASCRIPT
 
 ## Screenshots or Demo:
+- [Demo video](https://youtu.be/nL_UBws3aaE)
 
 ## Roadmap and Future Enhancements
-- notifications when overspending
-- events on finances
+- Usage of local storage to persist data
+- Set limit for categories
+- Customized currency
+
 ## Contact Information:
 - Phone: +233245067087
 - Email: stawiah17@gmail.com
