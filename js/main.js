@@ -27,7 +27,6 @@ btn1.addEventListener('click', () => {
     budget_data_array.length = 0;
     revenue_data_array.length = 0;
     budget_data_array.push(limit_fields_data); //store in the new array
-    console.log(budget_data_array);
     
     limitUpdate(budget_data_array);// update the limit meter and label
     resetLimit(); //reset the limitset form to default
@@ -49,8 +48,6 @@ btn2.addEventListener('click', () => {
     } else {
         budget_data_array.push(expense_fields_data);// add objet to the array
     }
-
-    console.log(budget_data_array);
 
     createCard(budget_data_array)
     expenseUpdate(budget_data_array);
@@ -82,8 +79,6 @@ btn4.addEventListener('click', () => {
     } else {
         revenue_data_array.push(revenue_fields_data);// add objet to the array
     }
-
-    console.log(revenue_data_array);
 
     createRevenueCard(revenue_data_array);
     revenueUpdate(revenue_data_array);
@@ -273,13 +268,12 @@ function allBudgetData(budget_data_array, revenue_data_array) {
         const amount = revenue['amount'];
         all_data['Revenue'][category] = amount;
     }
-    console.log(all_data);
     return all_data;
 }
 
 //function to export data into cvs
 function createCSV(all_data) {
-    let csvContent = "Category,Key,Value\n";
+    let csvContent = "Category,Key,Value\n";//initial values that creates the heading
     for (const category in all_data) {
         for (const key in all_data[category]) {
             const value = all_data[category][key];
@@ -289,15 +283,17 @@ function createCSV(all_data) {
     return csvContent;
 }
 
+//function to download budget details
 function downloadCSV(csvContent) {
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
+    const blob = new Blob([csvContent], { type: 'text/csv' });//new blob object
+    const url = URL.createObjectURL(blob);//generate url for download
+    //invincible anchor element
     const a = document.createElement('a');
     a.href = url;
     a.download = 'all_data.csv';
     a.textContent = 'Download CSV';
-
-    // document.body.appendChild(a);
+    //trigger download
     a.click();
+    //clean up resources
     window.URL.revokeObjectURL(url);
 }

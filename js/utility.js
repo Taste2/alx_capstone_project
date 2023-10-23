@@ -78,6 +78,7 @@ function validateExpenseForm() {
     return true;
 }
 
+//function to validate revenue form
 function validateRevenueForm() {
     if (revenue_amount.value === "") {
         error3.style.color = 'red'
