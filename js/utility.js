@@ -182,7 +182,7 @@ function remainUpdate() {
     }
     else {
         overspent_warning.textContent = ''
-        graph_spent.style.color = 'black';
+        graph_spent.style.color = 'rgb(48, 52, 129)';
         overspent_warning.value = 0;
     }
 }
